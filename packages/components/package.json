@@ -1,0 +1,13 @@
+{
+  "name": "vue3-bmapgl",
+  "type": "module",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "rollup -c rollup.config.ts --configPlugin typescript"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

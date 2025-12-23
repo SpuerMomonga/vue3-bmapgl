@@ -1,0 +1,7 @@
+{
+  "name": "nuxt-vue3-bmapgl",
+  "main": "./dist/index.js",
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {}
+}
