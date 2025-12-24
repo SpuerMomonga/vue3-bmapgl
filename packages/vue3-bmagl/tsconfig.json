@@ -1,6 +1,10 @@
 {
   "extends": "../../tsconfig.json",
-  "compilerOptions": {},
-  "include": ["**/*.ts", "**/*.vue"],
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "./es",
+    "emitDeclarationOnly": true,
+  },
+  "include": ["**/**/*.ts"],
   "exclude": ["node_modules"]
 }

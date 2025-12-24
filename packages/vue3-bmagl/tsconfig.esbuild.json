@@ -8,6 +8,6 @@
     "jsxImportSource": "vue",
     "types": ["vue/jsx"]
   },
-  "include": ["**/*.ts", "**/*.vue", "map/src/map.tsx"],
+  "include": ["**/*.ts", "**/*.vue"],
   "exclude": ["node_modules"]
 }

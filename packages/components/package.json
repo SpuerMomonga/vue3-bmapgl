@@ -2,6 +2,7 @@
   "name": "@vue3-bmapgl/components",
   "type": "module",
   "main": "./index.ts",
+  "types": "./index.ts",
   "scripts": {
   },
   "peerDependencies": {

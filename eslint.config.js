@@ -7,6 +7,17 @@ export default antfu(
     typescript: true,
   },
   {
+    regexp: false,
+    ignores: [
+      'node_modules',
+      'lib',
+      'test/unit/coverage',
+      'src/_deprecated/icons',
+      'dist',
+      'es',
+    ],
+  },
+  {
     // Without `files`, they are general rules for all files
     rules: {
       'n/prefer-global/process': 'off',
