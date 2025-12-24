@@ -4,7 +4,7 @@ import { computed, defineComponent, provide, ref, renderSlot } from 'vue'
 import { configProviderProps } from './config-provider-props'
 import { configProviderInjectionKey } from './constants'
 
-const ConfigProvider = defineComponent({
+export default defineComponent({
   name: 'ConfigProvider',
   props: configProviderProps,
   setup(props, { slots }) {
@@ -32,5 +32,3 @@ const ConfigProvider = defineComponent({
     return () => renderSlot(slots, 'default')
   },
 })
-
-export default ConfigProvider

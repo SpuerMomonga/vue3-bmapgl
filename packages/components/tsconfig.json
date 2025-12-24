@@ -1,6 +1,12 @@
 {
   "extends": "../../tsconfig.json",
-  "compilerOptions": {},
-  "include": ["**/*.ts", "**/*.vue"],
+  "compilerOptions": {
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
+    "jsxImportSource": "vue",
+    "types": ["vue/jsx"]
+  },
+  "include": ["**/*.ts", "**/*.vue", "map/src/map.tsx"],
   "exclude": ["node_modules"]
 }
