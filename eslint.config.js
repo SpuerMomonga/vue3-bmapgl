@@ -20,6 +20,7 @@ export default antfu(
       'ts/no-namespace': 'off',
       'unicorn/error-message': 'off',
       'pnpm/yaml-enforce-settings': 'off',
+      'pnpm/json-enforce-catalog': 'off',
     },
     ignores: [
       // ...globs

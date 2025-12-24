@@ -4,6 +4,9 @@
   "scripts": {
     "lint:fix": "eslint . --fix"
   },
+  "dependencies": {
+    "@vue3-bmapgl/components": "workspace:^"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^6.7.3",
     "@types/node": "^22.19.3",
