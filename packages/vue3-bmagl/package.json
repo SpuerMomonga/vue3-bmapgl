@@ -2,9 +2,9 @@
   "name": "vue3-bmapgl",
   "type": "module",
   "main": "lib/index.ts",
-  "types": "es/index.d.ts",
   "unpkg": "dist/index.js",
-  "jsdelivr": "dist/index.js", 
+  "jsdelivr": "dist/index.js",
+  "types": "es/index.d.ts",
   "scripts": {
     "build": "rollup -c"
   },

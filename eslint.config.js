@@ -5,21 +5,22 @@ export default antfu(
     formatters: true,
     vue: true,
     typescript: true,
-  },
-  {
     regexp: false,
-    ignores: [
-      'node_modules',
-      'lib',
-      'dist',
-      'es',
-    ],
   },
+  // {
+  //   regexp: false,
+  //   ignores: [
+  //     'node_modules',
+  //     'lib',
+  //     'dist',
+  //     'es',
+  //   ],
+  // },
   {
     // Without `files`, they are general rules for all files
     rules: {
       'n/prefer-global/process': 'off',
-      'no-control-regex': 'off',
+      // 'no-control-regex': 'off',
       'toml/padding-line-between-pairs': 'off',
       'brace-style': ['error', '1tbs', { allowSingleLine: true }],
       '@stylistic/brace-style': 'off',

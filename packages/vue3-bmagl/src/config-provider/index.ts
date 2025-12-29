@@ -1,6 +1,4 @@
-import { default as BConfigProvider } from './src/config-provider'
-import type { ConfigProviderProps } from './src/config-provider-props'
-import { configProviderProps } from './src/config-provider-props'
-import { configProviderInjectionKey } from './src/constants'
-
-export {BConfigProvider, ConfigProviderProps, configProviderProps, configProviderInjectionKey}
+export { default as BConfigProvider } from './src/config-provider'
+export type { ConfigProviderProps } from './src/config-provider-props'
+export { configProviderProps } from './src/config-provider-props'
+export { configProviderInjectionKey } from './src/constants'

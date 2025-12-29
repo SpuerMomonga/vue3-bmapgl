@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      '@vue3-bmapgl/components':
-        specifier: workspace:^
-        version: link:packages/vue3-bmagl
     devDependencies:
       '@antfu/eslint-config':
         specifier: ^6.7.3
@@ -30,9 +26,9 @@ importers:
 
   docs: {}
 
-  packages/nuxt-module: {}
+  packages/bmapgl-types: {}
 
-  packages/types: {}
+  packages/nuxt-module: {}
 
   packages/vue3-bmagl:
     dependencies:

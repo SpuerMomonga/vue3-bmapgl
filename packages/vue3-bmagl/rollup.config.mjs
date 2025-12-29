@@ -1,11 +1,11 @@
-import { defineConfig } from 'rollup'
+import path from 'node:path'
+import commonjs from '@rollup/plugin-commonjs'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+import typescript from '@rollup/plugin-typescript'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import { nodeResolve } from '@rollup/plugin-node-resolve'
-import commonjs from '@rollup/plugin-commonjs'
+import { defineConfig } from 'rollup'
 import esbuild from 'rollup-plugin-esbuild'
-import path from 'path'
-import typescript from '@rollup/plugin-typescript'
 import { globSync } from 'tinyglobby'
 
 const plugins = [
@@ -42,5 +42,5 @@ export default defineConfig([
     treeshake: {
       moduleSideEffects: false,
     },
-  }
+  },
 ])
