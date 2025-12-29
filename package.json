@@ -1,6 +1,9 @@
 {
   "name": "root",
   "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "lint:fix": "eslint . --fix"
   },

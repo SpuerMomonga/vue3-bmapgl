@@ -2,6 +2,7 @@
   "name": "vue3-bmapgl-docs",
   "private": true,
   "scripts": {},
-  "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "vitepress": "^1.6.4"
+  }
 }
