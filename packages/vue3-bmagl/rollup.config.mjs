@@ -5,8 +5,28 @@ import typescript from '@rollup/plugin-typescript'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { defineConfig } from 'rollup'
+import del from 'rollup-plugin-delete'
 import esbuild from 'rollup-plugin-esbuild'
 import { globSync } from 'tinyglobby'
+
+const buildConfig = [
+  {
+    module: 'ESNext',
+    format: 'esm',
+    ext: 'mjs',
+    output: {
+      dir: 'es',
+    },
+  },
+  {
+    module: 'CommonJS',
+    format: 'cjs',
+    ext: 'js',
+    output: {
+      dir: 'lib',
+    },
+  },
+]
 
 const plugins = [
   vue(),
@@ -22,25 +42,22 @@ const plugins = [
       '.vue': 'ts',
     },
   }),
-  typescript({ tsconfig: './tsconfig.json' }),
 ]
 
-export default defineConfig([
-  {
-    input: globSync('src/**/*.{ts,js,vue,tsx}'),
-    plugins,
-    external: ['vue'],
-    output: {
-      module: 'ESNext',
-      format: 'esm',
-      dir: './es',
-      entryFileNames: `[name].mjs`,
-      preserveModules: true,
-      preserveModulesRoot: path.resolve('./', 'src'),
-      sourcemap: true,
-    },
-    treeshake: {
-      moduleSideEffects: false,
-    },
+export default defineConfig(buildConfig.map(config => ({
+  input: globSync('src/**/*.{ts,js,vue,tsx}'),
+  plugins: [del({ targets: config.output.dir, hook: 'buildStart' }), ...plugins, typescript({ tsconfig: './tsconfig.json', declarationDir: config.output.dir, module: config.module })],
+  external: ['vue'],
+  output: {
+    module: config.module,
+    format: config.format,
+    dir: path.resolve(config.output.dir),
+    entryFileNames: `[name].${config.ext}`,
+    preserveModules: true,
+    preserveModulesRoot: path.resolve('./', 'src'),
+    sourcemap: true,
   },
-])
+  treeshake: {
+    moduleSideEffects: false,
+  },
+})))

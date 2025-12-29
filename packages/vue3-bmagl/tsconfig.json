@@ -8,8 +8,7 @@
     "jsxImportSource": "vue",
     "rootDir": "./src",
     "types": ["vue/jsx"],
-    "declaration": true,
-    "declarationDir": "es"
+    "declaration": true
   },
   "include": ["**/*.ts", "**/*.vue", "**/*.tsx"],
   "exclude": ["node_modules", "es", "lib", "dist"]

@@ -33,7 +33,10 @@ export default antfu(
       'pnpm/json-enforce-catalog': 'off',
     },
     ignores: [
-      // ...globs
+      'node_modules',
+      'lib',
+      'dist',
+      'es',
     ],
   },
 )
