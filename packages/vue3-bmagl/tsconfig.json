@@ -1,10 +1,16 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "rootDir": "./src",
+    "target": "ES6",
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
+    "jsxImportSource": "vue",
+    "types": ["vue/jsx"],
     "declaration": true,
-    "declarationDir": "./es",
-    "emitDeclarationOnly": true,
+    "declarationDir": "es"
   },
-  "include": ["**/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": ["**/*.ts", "**/*.vue", "**/*.tsx"],
+  "exclude": ["node_modules", "es", "lib", "dist"]
 }

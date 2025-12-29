@@ -13,5 +13,10 @@
     "eslint": "^9.39.2",
     "eslint-plugin-format": "^1.1.0",
     "typescript": "^5.9.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }

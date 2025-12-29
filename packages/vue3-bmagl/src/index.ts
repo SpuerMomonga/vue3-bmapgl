@@ -1,1 +1,1 @@
-export * from '@vue3-bmapgl/components'
+export * from './components'

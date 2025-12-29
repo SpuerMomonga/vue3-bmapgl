@@ -1,112 +1,46 @@
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
-import babel from '@rollup/plugin-babel'
-import commonjs from '@rollup/plugin-commonjs'
-import nodeResolve from '@rollup/plugin-node-resolve'
-import replace from '@rollup/plugin-replace'
-import terser from '@rollup/plugin-terser'
-import merge from 'deepmerge'
 import { defineConfig } from 'rollup'
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
 import esbuild from 'rollup-plugin-esbuild'
+import path from 'path'
 import typescript from '@rollup/plugin-typescript'
+import { globSync } from 'tinyglobby'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
-const extensions = ['.mjs', '.js', '.json', '.ts']
-
-const baseConfig = defineConfig({
-  input: path.resolve('./src/index.ts'),
-  external: ['vue'],
-  plugins: [
-    nodeResolve({ extensions }),
-    typescript(),
-    esbuild({
-      tsconfig: path.resolve(__dirname, 'tsconfig.esbuild.json'),
-      target: 'esnext',
-      sourceMap: true,
-    }),
-    babel({
-      extensions,
-      babelHelpers: 'bundled',
-    }),
-    commonjs(),
-  ],
-})
-
-const umdConfig = defineConfig({
-  output: {
-    name: 'Vue3BMapGL',
-    format: 'umd',
-    exports: 'named',
-    globals: {
-      vue: 'Vue',
+const plugins = [
+  vue(),
+  vueJsx(),
+  nodeResolve({
+    extensions: ['.mjs', '.js', '.json', '.ts'],
+  }),
+  commonjs(),
+  esbuild({
+    sourceMap: true,
+    target: 'esnext',
+    loaders: {
+      '.vue': 'ts',
     },
-  },
-})
-
-const esmConfig = defineConfig({
-  output: {
-    format: 'esm',
-  },
-})
-
-const devConfig = defineConfig({
-  plugins: [
-    replace({
-      values: {
-        '__DEV__': JSON.stringify(true),
-        'process.env.NODE_ENV': JSON.stringify('development'),
-      },
-      preventAssignment: true,
-    }),
-  ],
-})
-
-const umdDevOutputConfig = defineConfig({
-  output: {
-    file: path.resolve('dist/index.js'),
-  },
-})
-
-const esmDevOutputConfig = defineConfig({
-  output: {
-    file: path.resolve('dist/index.mjs'),
-  },
-})
-
-const prodConfig = defineConfig({
-  plugins: [
-    replace({
-      values: {
-        '__DEV__': JSON.stringify(false),
-        'process.env.NODE_ENV': JSON.stringify('production'),
-      },
-      preventAssignment: true,
-    }),
-    terser(),
-  ],
-})
-
-const umdProdOutputConfig = defineConfig({
-  output: {
-    file: path.resolve('dist/index.prod.js'),
-  },
-})
-
-const esmProdOutputConfig = defineConfig({
-  output: {
-    file: path.resolve('dist/index.prod.mjs'),
-  },
-})
+  }),
+  typescript({ tsconfig: './tsconfig.json' }),
+]
 
 export default defineConfig([
-  // umd dev
-  merge.all([baseConfig, umdConfig, devConfig, umdDevOutputConfig]),
-  // umd prod
-  merge.all([baseConfig, umdConfig, prodConfig, umdProdOutputConfig]),
-  // esm dev
-  merge.all([baseConfig, esmConfig, devConfig, esmDevOutputConfig]),
-  // esm prod
-  merge.all([baseConfig, esmConfig, prodConfig, esmProdOutputConfig]),
+  {
+    input: globSync('src/**/*.{ts,js,vue,tsx}'),
+    plugins,
+    external: ['vue'],
+    output: {
+      module: 'ESNext',
+      format: 'esm',
+      dir: './es',
+      entryFileNames: `[name].mjs`,
+      preserveModules: true,
+      preserveModulesRoot: path.resolve('./', 'src'),
+      sourcemap: true,
+    },
+    treeshake: {
+      moduleSideEffects: false,
+    },
+  }
 ])

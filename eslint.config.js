@@ -11,8 +11,6 @@ export default antfu(
     ignores: [
       'node_modules',
       'lib',
-      'test/unit/coverage',
-      'src/_deprecated/icons',
       'dist',
       'es',
     ],
