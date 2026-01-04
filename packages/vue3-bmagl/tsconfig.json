@@ -7,7 +7,7 @@
     "jsxFragmentFactory": "Fragment",
     "jsxImportSource": "vue",
     "rootDir": "./src",
-    "types": ["vue/jsx"],
+    "types": ["vue/jsx", "@vue3-bmapgl/bmapgl-types"],
     "declaration": true
   },
   "include": ["**/*.ts", "**/*.vue", "**/*.tsx"],

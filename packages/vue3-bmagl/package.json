@@ -1,20 +1,35 @@
 {
   "name": "vue3-bmapgl",
+  "homepage": "https://github.com/SpuerMomonga/vue3-bmapgl",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:SpuerMomonga/vue3-bmapgl.git"
+  },
   "main": "lib/index.ts",
   "module": "es/index.mjs",
-  "unpkg": "dist/index.js",
-  "jsdelivr": "dist/index.js",
+  "unpkg": "dist/index.prod.js",
+  "jsdelivr": "dist/index.prod.js",
   "types": "es/index.d.ts",
+  "files": [
+    "README.md",
+    "dist",
+    "es",
+    "lib"
+  ],
   "scripts": {
     "build": "rollup -c"
   },
   "peerDependencies": {
     "vue": "^3.0.0"
   },
+  "dependencies": {
+    "@vue3-bmapgl/bmapgl-types": "workspace:*"
+  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^29.0.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-replace": "^6.0.3",
+    "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.3.0",
     "@vitejs/plugin-vue": "^6.0.3",
     "@vitejs/plugin-vue-jsx": "^5.1.3",

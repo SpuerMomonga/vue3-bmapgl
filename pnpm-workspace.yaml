@@ -1,6 +1,7 @@
 shellEmulator: true
 packages:
   - 'packages/*'
+  - 'examples/*'
   - docs
 
 catalog:

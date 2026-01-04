@@ -1,6 +1,8 @@
 import path from 'node:path'
 import commonjs from '@rollup/plugin-commonjs'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
+import replace from '@rollup/plugin-replace'
+import terser from '@rollup/plugin-terser'
 import typescript from '@rollup/plugin-typescript'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
@@ -8,25 +10,6 @@ import { defineConfig } from 'rollup'
 import del from 'rollup-plugin-delete'
 import esbuild from 'rollup-plugin-esbuild'
 import { globSync } from 'tinyglobby'
-
-const buildConfig = [
-  {
-    module: 'ESNext',
-    format: 'esm',
-    ext: 'mjs',
-    output: {
-      dir: 'es',
-    },
-  },
-  {
-    module: 'CommonJS',
-    format: 'cjs',
-    ext: 'js',
-    output: {
-      dir: 'lib',
-    },
-  },
-]
 
 const plugins = [
   vue(),
@@ -44,15 +27,15 @@ const plugins = [
   }),
 ]
 
-export default defineConfig(buildConfig.map(config => ({
+const esm = defineConfig({
   input: globSync('src/**/*.{ts,js,vue,tsx}'),
-  plugins: [del({ targets: config.output.dir, hook: 'buildStart' }), ...plugins, typescript({ tsconfig: './tsconfig.json', declarationDir: config.output.dir, module: config.module })],
+  plugins: [del({ targets: 'es', hook: 'buildStart' }), ...plugins, typescript({ tsconfig: './tsconfig.json', declarationDir: 'es' })],
   external: ['vue'],
   output: {
-    module: config.module,
-    format: config.format,
-    dir: path.resolve(config.output.dir),
-    entryFileNames: `[name].${config.ext}`,
+    module: 'ESNext',
+    format: 'esm',
+    dir: 'es',
+    entryFileNames: `[name].mjs`,
     preserveModules: true,
     preserveModulesRoot: path.resolve('./', 'src'),
     sourcemap: true,
@@ -60,4 +43,65 @@ export default defineConfig(buildConfig.map(config => ({
   treeshake: {
     moduleSideEffects: false,
   },
-})))
+})
+
+const cjs = defineConfig({
+  input: globSync('src/**/*.{ts,js,vue,tsx}'),
+  plugins: [del({ targets: 'lib', hook: 'buildStart' }), ...plugins, typescript({ tsconfig: './tsconfig.json', declarationDir: 'lib' })],
+  external: ['vue'],
+  output: {
+    module: 'CommonJS',
+    format: 'cjs',
+    dir: 'lib',
+    entryFileNames: `[name].js`,
+    preserveModules: true,
+    preserveModulesRoot: path.resolve('./', 'src'),
+    sourcemap: true,
+  },
+  treeshake: {
+    moduleSideEffects: false,
+  },
+})
+
+const devUmd = defineConfig({
+  input: path.resolve('./src/index.ts'),
+  plugins: [
+    del({ targets: 'dist/index.js', hook: 'buildStart' }),
+    replace({
+      values: {
+        __DEV__: 'process.env.NODE_ENV !== \'production\'',
+      },
+      preventAssignment: true,
+    }),
+    ...plugins,
+  ],
+  external: ['vue'],
+  output: {
+    file: path.resolve('dist/index.js'),
+    name: 'Vue3Bmapgl',
+    format: 'umd',
+  },
+})
+
+const prodUmd = defineConfig({
+  input: path.resolve('./src/index.ts'),
+  plugins: [
+    del({ targets: 'dist/index.prod.js', hook: 'buildStart' }),
+    replace({
+      values: {
+        'process.env.NODE_ENV': JSON.stringify('production'),
+      },
+      preventAssignment: true,
+    }),
+    terser(),
+    ...plugins,
+  ],
+  external: ['vue'],
+  output: {
+    file: path.resolve('dist/index.prod.js'),
+    name: 'Vue3Bmapgl',
+    format: 'umd',
+  },
+})
+
+export default defineConfig([esm, cjs, devUmd, prodUmd])

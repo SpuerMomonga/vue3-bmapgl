@@ -5,6 +5,8 @@
     "node": ">=22"
   },
   "scripts": {
+    "build": "pnpm -F vue3-bmapgl build",
+    "dev:vite": "pnpm -F @vue3-bmapgl/vite-map dev",
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {

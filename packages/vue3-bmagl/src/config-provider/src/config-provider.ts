@@ -1,6 +1,6 @@
 import type { LoadStatus } from './internal-interface'
-import { loader } from '../../_utils'
 import { computed, defineComponent, provide, ref, renderSlot } from 'vue'
+import { loader } from '../../_utils'
 import { configProviderProps } from './config-provider-props'
 import { configProviderInjectionKey } from './constants'
 

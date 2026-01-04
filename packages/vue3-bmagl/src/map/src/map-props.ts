@@ -1,6 +1,5 @@
-
-import { PropType } from 'vue'
-import { ExtractPublicPropTypes } from '../../_utils'
+import type { PropType } from 'vue'
+import type { ExtractPublicPropTypes } from '../../_utils'
 
 export const mapProps = {
   center: Array as PropType<number[]>,
