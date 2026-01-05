@@ -50,12 +50,12 @@ export default defineComponent({
       watch(() => mergedMapSetRef.value.enableScrollWheelZoom, setScrollWheelZoom)
     }
 
-    watchEffect(() => {
-      if (mergedStatusRef?.value === 'loaded') {
+    watch(() => mergedStatusRef?.value, (value) => {
+      if (value === 'loaded' && !map) {
         nextTick(init)
         startWatchProps()
       }
-    })
+    }, { immediate: true })
 
     onUnmounted(() => {
       if (map) {

@@ -15,7 +15,7 @@ export function loader(options: LoaderOptions): Promise<void> {
     timeout = 10000,
   } = options
 
-  if (isScriptLoaded || window.BMapGL) {
+  if (isScriptLoaded && window.BMapGL) {
     return Promise.resolve()
   }
 
