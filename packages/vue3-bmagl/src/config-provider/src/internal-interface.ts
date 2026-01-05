@@ -8,6 +8,7 @@ export interface GlobalMapConfig {
   zoom?: number
   showControls?: boolean
   center?: BMapGL.Point | string | [number, number]
+  enableScrollWheelZoom?: boolean
 }
 
 export interface ConfigProviderInjection {

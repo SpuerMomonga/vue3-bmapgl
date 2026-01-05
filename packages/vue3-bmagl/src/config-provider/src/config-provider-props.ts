@@ -9,6 +9,7 @@ export const configProviderProps = {
   maxZoom: Number,
   showControls: Boolean,
   center: Object as PropType<BMapGL.Point | string | [number, number]>,
+  enableScrollWheelZoom: Boolean,
 } as const
 
 export type ConfigProviderProps = Partial<ExtractPropTypes<typeof configProviderProps>>

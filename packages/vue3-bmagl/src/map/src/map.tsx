@@ -1,12 +1,21 @@
-import { defineComponent, nextTick, onUnmounted, ref, watchEffect } from 'vue'
+import type { SlotsType, VNode } from 'vue'
+import { defineComponent, nextTick, onUnmounted, ref, watch, watchEffect } from 'vue'
 import { useConfig } from '../../_mixins'
+import { resolveWrappedSlot } from '../../_utils'
 import { mapProps } from './map-props'
 import styles from './style/map.module.css'
+
+export interface MapSlots {
+  default?: () => VNode[]
+  loading?: () => VNode[]
+  failed?: () => VNode[]
+}
 
 export default defineComponent({
   name: 'Map',
   props: mapProps,
-  setup(props) {
+  slots: Object as SlotsType<MapSlots>,
+  setup(props, { slots }) {
     const { mergedMapSetRef, mergedStatusRef } = useConfig(props)
 
     const contentRef = ref<HTMLDivElement | null>()
@@ -22,18 +31,29 @@ export default defineComponent({
       }
     }
 
+    const setScrollWheelZoom = (enableScrollWheelZoom?: boolean) => {
+      enableScrollWheelZoom ? map!.enableScrollWheelZoom() : map!.disableScrollWheelZoom()
+    }
+
     const init = () => {
-      const { center, maxZoom, minZoom } = mergedMapSetRef.value
+      const { center, maxZoom, minZoom, enableScrollWheelZoom } = mergedMapSetRef.value
       map = new BMapGL.Map(contentRef.value!, {
         maxZoom,
         minZoom,
       })
       setCenterAndZoom(center!)
+      setScrollWheelZoom(enableScrollWheelZoom)
+    }
+
+    const startWatchProps = () => {
+      watch(() => mergedMapSetRef.value.center!, setCenterAndZoom, { deep: true })
+      watch(() => mergedMapSetRef.value.enableScrollWheelZoom, setScrollWheelZoom)
     }
 
     watchEffect(() => {
       if (mergedStatusRef?.value === 'loaded') {
         nextTick(init)
+        startWatchProps()
       }
     })
 
@@ -49,8 +69,13 @@ export default defineComponent({
 
     return () => (
       <div ref={contentRef} class={[styles['b-map-content'], props.class]}>
-        {mergedStatusRef?.value === 'pending' && <div>map loading...</div>}
-        {mergedStatusRef?.value === 'failed' && <div>map failed</div>}
+        {mergedStatusRef?.value === 'pending'
+          && resolveWrappedSlot(slots.loading, () =>
+            (<div class={[styles['b-map-loading']]}>map loading...</div>))}
+        {mergedStatusRef?.value === 'failed'
+          && resolveWrappedSlot(slots.failed, () =>
+            (<div class={[styles['b-map-failed']]}>map failed</div>))}
+        {slots.default?.()}
       </div>
     )
   },

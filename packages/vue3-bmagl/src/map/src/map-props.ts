@@ -19,6 +19,10 @@ export const mapProps = {
     default: 14,
   },
   class: String,
+  enableScrollWheelZoom: {
+    type: Boolean,
+    default: false,
+  },
 } as const
 
 export type MapProps = ExtractPublicPropTypes<typeof mapProps>
