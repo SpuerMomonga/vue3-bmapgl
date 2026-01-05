@@ -7,15 +7,6 @@ export default antfu(
     typescript: true,
     regexp: false,
   },
-  // {
-  //   regexp: false,
-  //   ignores: [
-  //     'node_modules',
-  //     'lib',
-  //     'dist',
-  //     'es',
-  //   ],
-  // },
   {
     // Without `files`, they are general rules for all files
     rules: {

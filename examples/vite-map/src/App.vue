@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BConfigProvider, BMap } from 'vue3-bmapgl'
+import { BConfigProvider, BMap } from 'vue3-bmap-gl'
 
 const ak = import.meta.env.VITE_BMAP_AK
 </script>

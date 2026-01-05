@@ -3,10 +3,12 @@
   "type": "module",
   "version": "0.0.1",
   "description": "Baidu Map GL Type Definitions",
-  "homepage": "https://github.com/SpuerMomonga/vue3-bmapgl",
+  "author": "SpuerMomonga <spuermomonga@qq.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/SpuerMomonga/vue3-bmap-gl",
   "repository": {
     "type": "git",
-    "url": "git@github.com:SpuerMomonga/vue3-bmapgl.git"
+    "url": "git+ssh://git@github.com/SpuerMomonga/vue3-bmap-gl.git"
   },
   "keywords": ["bmap", "baidu-map", "types"],
   "main": "./types/index.d.ts",

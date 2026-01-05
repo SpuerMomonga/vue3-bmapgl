@@ -43,9 +43,9 @@ importers:
       vue:
         specifier: 'catalog:'
         version: 3.5.26(typescript@5.9.3)
-      vue3-bmapgl:
+      vue3-bmap-gl:
         specifier: workspace:*
-        version: link:../../packages/vue3-bmagl
+        version: link:../../packages/vue3-bmap-gl
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^6.0.3
@@ -58,11 +58,11 @@ importers:
 
   packages/nuxt-module: {}
 
-  packages/vue3-bmagl:
+  packages/vue3-bmap-gl:
     dependencies:
       bmapgl-types:
-        specifier: workspace:*
-        version: link:../bmapgl-types
+        specifier: 0.0.1
+        version: 0.0.1
       vue:
         specifier: ^3.0.0
         version: 3.5.26(typescript@5.9.3)
@@ -1314,6 +1314,9 @@ packages:
 
   birpc@2.9.0:
     resolution: {integrity: sha512-KrayHS5pBi69Xi9JmvoqrIgYGDkD6mcSe/i6YKi3w5kekCLzrX4+nawcXqrj2tIp50Kw/mT/s3p+GVK0A0sKxw==}
+
+  bmapgl-types@0.0.1:
+    resolution: {integrity: sha512-n7mDUerg9bfpTh4kK230jLn45O4hcRLaKfAfcgnjr1XfxohFYO5bt3EHtZcWnR1FQg/DOTiIUu2oFDrBUo9q1Q==}
 
   boolbase@1.0.0:
     resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
@@ -4273,6 +4276,8 @@ snapshots:
   baseline-browser-mapping@2.9.11: {}
 
   birpc@2.9.0: {}
+
+  bmapgl-types@0.0.1: {}
 
   boolbase@1.0.0: {}
 

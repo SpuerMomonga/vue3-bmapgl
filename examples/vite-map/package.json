@@ -1,5 +1,5 @@
 {
-  "name": "@vue3-bmapgl/vite-map",
+  "name": "@vue3-bmap-gl/vite-map",
   "type": "module",
   "private": true,
   "scripts": {
@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "vue": "catalog:",
-    "vue3-bmapgl": "workspace:*"
+    "vue3-bmap-gl": "workspace:*"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.3",
