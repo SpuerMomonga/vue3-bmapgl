@@ -1,5 +1,5 @@
 import type { SlotsType, VNode } from 'vue'
-import { defineComponent, nextTick, onUnmounted, ref, watch, watchEffect } from 'vue'
+import { defineComponent, nextTick, onMounted, onUnmounted, ref, watch, watchEffect } from 'vue'
 import { useConfig } from '../../_mixins'
 import { resolveWrappedSlot } from '../../_utils'
 import { mapProps } from './map-props'
@@ -50,12 +50,14 @@ export default defineComponent({
       watch(() => mergedMapSetRef.value.enableScrollWheelZoom, setScrollWheelZoom)
     }
 
-    watch(() => mergedStatusRef?.value, (value) => {
-      if (value === 'loaded' && !map) {
-        nextTick(init)
-        startWatchProps()
-      }
-    }, { immediate: true })
+    onMounted(() => {
+      watchEffect(() => {
+        if (mergedStatusRef?.value === 'loaded' && !map) {
+          nextTick(init)
+          startWatchProps()
+        }
+      })
+    })
 
     onUnmounted(() => {
       if (map) {
