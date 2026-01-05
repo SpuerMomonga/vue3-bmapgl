@@ -23,8 +23,8 @@ export default defineComponent({
     })
 
     const mergedMapSetRef = computed(() => {
-      const { ak, apiUrl, plugins, ...retProps } = props
-      return retProps
+      const { mapConfig } = props
+      return mapConfig ?? {}
     })
 
     provide(configProviderInjectionKey, { mergedStatusRef, mergedMapSetRef })

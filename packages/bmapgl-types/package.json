@@ -2,6 +2,19 @@
   "name": "bmapgl-types",
   "type": "module",
   "version": "0.0.1",
+  "description": "Baidu Map GL Type Definitions",
+  "homepage": "https://github.com/SpuerMomonga/vue3-bmapgl",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:SpuerMomonga/vue3-bmapgl.git"
+  },
+  "keywords": ["bmap", "baidu-map", "types"],
   "main": "./types/index.d.ts",
-  "types": "./types/index.d.ts"
+  "types": "./types/index.d.ts",
+  "files": [
+    "README.md",
+    "types"
+  ],
+  "scripts": {},
+  "dependencies": {}
 }

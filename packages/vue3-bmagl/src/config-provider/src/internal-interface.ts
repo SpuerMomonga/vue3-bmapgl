@@ -1,17 +1,9 @@
 import type { Ref } from 'vue'
+import type { MapConfig } from './config-provider-props'
 
 export type LoadStatus = 'pending' | 'loaded' | 'failed' | 'notload'
 
-export interface GlobalMapConfig {
-  minZoom?: number
-  maxZoom?: number
-  zoom?: number
-  showControls?: boolean
-  center?: BMapGL.Point | string | [number, number]
-  enableScrollWheelZoom?: boolean
-}
-
 export interface ConfigProviderInjection {
   mergedStatusRef: Ref<LoadStatus>
-  mergedMapSetRef: Ref<GlobalMapConfig>
+  mergedMapSetRef: Ref<MapConfig>
 }
