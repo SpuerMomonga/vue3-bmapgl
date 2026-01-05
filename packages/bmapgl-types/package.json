@@ -1,5 +1,5 @@
 {
-  "name": "@vue3-bmapgl/bmapgl-types",
+  "name": "bmapgl-types",
   "type": "module",
   "version": "0.0.1",
   "main": "./types/index.d.ts",

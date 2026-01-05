@@ -9,6 +9,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import { defineConfig } from 'rollup'
 import del from 'rollup-plugin-delete'
 import esbuild from 'rollup-plugin-esbuild'
+import postcss from 'rollup-plugin-postcss'
 import { globSync } from 'tinyglobby'
 
 const plugins = [
@@ -24,6 +25,13 @@ const plugins = [
     loaders: {
       '.vue': 'ts',
     },
+  }),
+  postcss({
+    modules: true,
+    extract: false,
+    inject: true,
+    minimize: true,
+    extensions: ['.css'],
   }),
 ]
 

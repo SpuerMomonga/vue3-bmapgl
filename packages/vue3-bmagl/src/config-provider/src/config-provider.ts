@@ -8,26 +8,26 @@ export default defineComponent({
   name: 'ConfigProvider',
   props: configProviderProps,
   setup(props, { slots }) {
-    const statusRef = ref<LoadStatus>('notload')
+    const mergedStatusRef = ref<LoadStatus>('notload')
 
     const scriptKey = props.apiUrl ? `_initBMap_` : `_initBMap_${props.ak}`
     const src = props.apiUrl
       ? `${props.apiUrl.replace(/&$/, '')}&callback=${scriptKey}`
       : `//api.map.baidu.com/api?type=webgl&v=1.0&ak=${props.ak}&callback=${scriptKey}`
 
-    statusRef.value = 'pending'
+    mergedStatusRef.value = 'pending'
     loader({ key: scriptKey, src }).then(() => {
-      statusRef.value = 'loaded'
+      mergedStatusRef.value = 'loaded'
     }).catch(() => {
-      statusRef.value = 'failed'
+      mergedStatusRef.value = 'failed'
     })
 
-    const mapConfigRef = computed(() => {
-      const { minZoom, maxZoom, showControls } = props
-      return { minZoom, maxZoom, showControls }
+    const mergedMapSetRef = computed(() => {
+      const { minZoom, maxZoom, showControls, zoom } = props
+      return { minZoom, maxZoom, showControls, zoom }
     })
 
-    provide(configProviderInjectionKey, { statusRef, mapConfigRef })
+    provide(configProviderInjectionKey, { mergedStatusRef, mergedMapSetRef })
 
     return () => renderSlot(slots, 'default')
   },

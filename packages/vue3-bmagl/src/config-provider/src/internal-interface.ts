@@ -5,10 +5,12 @@ export type LoadStatus = 'pending' | 'loaded' | 'failed' | 'notload'
 export interface GlobalMapConfig {
   minZoom?: number
   maxZoom?: number
+  zoom?: number
   showControls?: boolean
+  center?: BMapGL.Point | string | [number, number]
 }
 
 export interface ConfigProviderInjection {
-  statusRef: Ref<LoadStatus>
-  mapConfigRef: Ref<GlobalMapConfig>
+  mergedStatusRef: Ref<LoadStatus>
+  mergedMapSetRef: Ref<GlobalMapConfig>
 }

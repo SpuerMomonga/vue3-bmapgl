@@ -1,2 +1,2 @@
 export * from './config-provider'
-export * from './control/location'
+export * from './map'
