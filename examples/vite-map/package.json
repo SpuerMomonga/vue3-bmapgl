@@ -1,13 +1,13 @@
 {
-  "name": "@vue3-bmap-gl/vite-map",
+  "name": "@vue3-bmapgl/vite-map",
   "type": "module",
   "private": true,
   "scripts": {
     "dev": "vite"
   },
   "dependencies": {
-    "vue": "catalog:",
-    "vue3-bmap-gl": "workspace:*"
+    "@spuermomonga/vue3-bmapgl": "workspace:*",
+    "vue": "catalog:"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.3",

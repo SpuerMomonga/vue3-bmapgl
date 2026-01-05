@@ -8,7 +8,7 @@
     "jsxImportSource": "vue",
     "lib": ["ESNext", "DOM"],
     "rootDir": "./src",
-    "types": ["vue/jsx", "bmapgl-types"],
+    "types": ["vue/jsx", "@spuermomonga/bmapgl-types"],
     "declaration": true
   },
   "include": ["**/*.ts", "**/*.vue", "**/*.tsx"],

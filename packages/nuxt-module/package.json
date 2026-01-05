@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-vue3-bmap-gl",
+  "name": "@spuermomonga/nuxt-vue3-bmapgl",
   "main": "./dist/index.js",
   "scripts": {},
   "dependencies": {},
