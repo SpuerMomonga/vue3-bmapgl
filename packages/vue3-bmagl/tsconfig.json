@@ -6,6 +6,7 @@
     "jsxFactory": "h",
     "jsxFragmentFactory": "Fragment",
     "jsxImportSource": "vue",
+    "lib": ["ESNext", "DOM"],
     "rootDir": "./src",
     "types": ["vue/jsx", "bmapgl-types"],
     "declaration": true
