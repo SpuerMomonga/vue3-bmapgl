@@ -4,9 +4,19 @@ export interface MapConfig {
   minZoom?: number
   maxZoom?: number
   zoom?: number
-  showControls?: boolean
+  heading?: number
+  // showControls?: boolean
   center?: BMapGL.Point | string | [number, number]
   enableScrollWheelZoom?: boolean
+  enableDragging?: boolean
+  tilt?: number
+  enableTilt?: boolean
+  mapType?: BMapGL.MapTypeId
+  enableAutoResize?: boolean
+  enableTiltGestures?: boolean
+  enableRotate?: boolean
+  enableRotateGestures?: boolean
+  displayOptions?: BMapGL.displayOptions
 }
 
 export const configProviderProps = {

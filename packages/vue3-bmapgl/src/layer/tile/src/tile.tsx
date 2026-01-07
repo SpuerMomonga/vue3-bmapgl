@@ -1,8 +1,8 @@
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'Tile',
+  name: 'TileLayer',
   setup() {
     return () => <div>Tile</div>
-  }
+  },
 })

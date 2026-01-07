@@ -1,7 +1,7 @@
 {
   "name": "@spuermomonga/bmapgl-types",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "Baidu Map GL Type Definitions",
   "author": "SpuerMomonga <spuermomonga@qq.com>",
   "license": "MIT",

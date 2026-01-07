@@ -28,7 +28,7 @@
     "vue": "^3.0.0"
   },
   "dependencies": {
-    "@spuermomonga/bmapgl-types": "0.0.1"
+    "@spuermomonga/bmapgl-types": "0.0.4"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^29.0.0",
