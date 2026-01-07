@@ -1,4 +1,4 @@
-import type { Ref, SlotsType, VNode } from 'vue'
+import type { SlotsType, VNode } from 'vue'
 import { defineComponent, nextTick, onMounted, onUnmounted, provide, ref, watch, watchEffect } from 'vue'
 import { useConfig } from '../../_mixins'
 import { resolveWrappedSlot } from '../../_utils'

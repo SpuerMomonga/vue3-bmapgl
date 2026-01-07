@@ -60,3 +60,21 @@ export function loader(options: LoaderOptions): Promise<void> {
     document.body.appendChild(script)
   })
 }
+
+export function listToMapPoints(points?: BMapGL.Point[] | number[][] | string[]): BMapGL.Point[] {
+  if (!points || points.length === 0) {
+    return []
+  }
+
+  const first = points[0]
+
+  if (Array.isArray(first)) {
+    return (points as number[][]).map(([lng, lat]) => new BMapGL.Point(lng, lat))
+  }
+
+  if (typeof first === 'string') {
+    return points as BMapGL.Point[]
+  }
+
+  return points as BMapGL.Point[]
+}

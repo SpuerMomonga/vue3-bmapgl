@@ -1,4 +1,4 @@
-import { defineComponent, watch } from 'vue'
+import { defineComponent, onUnmounted, watch } from 'vue'
 import { useMapInstance } from '../../../_mixins'
 import { xyzLayerProps } from './xyz-props'
 
@@ -62,6 +62,12 @@ export default defineComponent({
 
     watch(() => props.visible, n => layer && (n ? addTileLayer(layer) : removeTileLayer(layer)))
     watch(() => props.options, () => createLayer())
+
+    onUnmounted(() => {
+      if (layer) {
+        mapInstance().removeTileLayer(layer)
+      }
+    })
 
     return () => <></>
   },
