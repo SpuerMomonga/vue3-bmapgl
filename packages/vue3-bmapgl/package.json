@@ -1,6 +1,6 @@
 {
   "name": "@spuermomonga/vue3-bmapgl",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "Baidu Map GL encapsulation for Vue 3",
   "author": "SpuerMomonga <spuermomonga@qq.com>",
   "license": "MIT",
@@ -28,7 +28,7 @@
     "vue": "^3.0.0"
   },
   "dependencies": {
-    "@spuermomonga/bmapgl-types": "0.0.4"
+    "@spuermomonga/bmapgl-types": "0.0.5"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^29.0.0",

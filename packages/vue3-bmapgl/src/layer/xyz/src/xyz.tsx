@@ -10,58 +10,135 @@ export default defineComponent({
 
     let layer: BMapGL.XYZLayer | null = null
 
-    const addTileLayer = (layer: BMapGL.XYZLayer) => {
-      const { getTile } = props.options
-      if (getTile) {
-        mapInstance().addTileLayer(layer)
-        ;(layer as any).loadRasterTileData = function (tileInfo: any, callback: any) {
-          const key = this.getTileKey(tileInfo)
+    const setZIndex = (zIndex: number) => {
+      layer?.setZIndex(zIndex)
+    }
 
-          const handleImageLoad = (image: HTMLImageElement) => {
-            (image as any).tileInfo = tileInfo
-            callback && callback(image, key)
-          }
+    const setBoundary = (boundary?: string[]) => {
+      boundary && !boundary.length ? layer?.addBoundary(boundary) : layer?.clearBoundary()
+    }
 
-          const handleError = () => callback && callback(null, key)
+    const setZIndexTop = (zIndexTop?: boolean) => {
+      zIndexTop && layer?.setZIndexTop()
+    }
 
-          getTile(tileInfo, (img) => {
-            if (typeof img === 'string' || img instanceof HTMLCanvasElement) {
-              const image = new Image()
-              image.crossOrigin = 'anonymous'
+    const initLayerOptions = () => {
+      const { zIndex, zIndexTop } = props
+      setZIndex(zIndex)
+      setZIndexTop(zIndexTop)
+    }
 
-              image.onload = () => handleImageLoad(image)
-              image.onerror = handleError
+    const startWatchProps = () => {
+      watch(() => props.zIndex, setZIndex)
+      watch(() => props.boundary, setBoundary)
+    }
 
-              image.src = typeof img === 'string' ? img : img.toDataURL()
-            } else if (img instanceof HTMLImageElement) {
-              handleImageLoad(img)
-            } else {
-              handleError()
+    const init = () => {
+      const { visible, getTile, xTemplate, yTemplate, zTemplate, bTemplate, minZoom, maxZoom, extent, extentCRSIsWGS84, boundary, useThumbData, tms } = props
+      layer = new BMapGL.XYZLayer({
+        xTemplate,
+        yTemplate,
+        zTemplate,
+        bTemplate,
+        minZoom,
+        maxZoom,
+        extent: extent as any,
+        extentCRSIsWGS84,
+        boundary,
+        useThumbData,
+        tms,
+      })
+      initLayerOptions()
+      if (visible) {
+        if (getTile) {
+          mapInstance().addTileLayer(layer)
+          ;(layer as any).loadRasterTileData = function (tileInfo: any, callback: any) {
+            const key = this.getTileKey(tileInfo)
+
+            const handleImageLoad = (image: HTMLImageElement) => {
+              (image as any).tileInfo = tileInfo
+              callback && callback(image, key)
             }
-          })
+
+            const handleError = () => callback && callback(null, key)
+
+            getTile(tileInfo, (img) => {
+              if (typeof img === 'string' || img instanceof HTMLCanvasElement) {
+                const image = new Image()
+                image.crossOrigin = 'anonymous'
+
+                image.onload = () => handleImageLoad(image)
+                image.onerror = handleError
+
+                image.src = typeof img === 'string' ? img : img.toDataURL()
+              } else if (img instanceof HTMLImageElement) {
+                handleImageLoad(img)
+              } else {
+                handleError()
+              }
+            })
+          }
+        } else {
+          mapInstance().addTileLayer(layer)
         }
-      } else {
-        mapInstance().addTileLayer(layer)
       }
+      startWatchProps()
     }
 
-    const removeTileLayer = (layer: BMapGL.XYZLayer) => {
-      mapInstance().removeTileLayer(layer)
-    }
+    init()
 
-    const createLayer = () => {
-      if (layer) {
-        removeTileLayer(layer)
-      }
-      const { getTile, ...retProps } = props.options
-      layer = new BMapGL.XYZLayer(retProps)
-      addTileLayer(layer)
-    }
+    // const addTileLayer = (layer: BMapGL.XYZLayer) => {
+    //   const { getTile } = props.options
+    //   if (getTile) {
+    //     mapInstance().addTileLayer(layer)
+    //     ;(layer as any).loadRasterTileData = function (tileInfo: any, callback: any) {
+    //       const key = this.getTileKey(tileInfo)
 
-    props.visible && createLayer()
+    //       const handleImageLoad = (image: HTMLImageElement) => {
+    //         (image as any).tileInfo = tileInfo
+    //         callback && callback(image, key)
+    //       }
 
-    watch(() => props.visible, n => layer && (n ? addTileLayer(layer) : removeTileLayer(layer)))
-    watch(() => props.options, () => createLayer())
+    //       const handleError = () => callback && callback(null, key)
+
+    //       getTile(tileInfo, (img) => {
+    //         if (typeof img === 'string' || img instanceof HTMLCanvasElement) {
+    //           const image = new Image()
+    //           image.crossOrigin = 'anonymous'
+
+    //           image.onload = () => handleImageLoad(image)
+    //           image.onerror = handleError
+
+    //           image.src = typeof img === 'string' ? img : img.toDataURL()
+    //         } else if (img instanceof HTMLImageElement) {
+    //           handleImageLoad(img)
+    //         } else {
+    //           handleError()
+    //         }
+    //       })
+    //     }
+    //   } else {
+    //     mapInstance().addTileLayer(layer)
+    //   }
+    // }
+
+    // const removeTileLayer = (layer: BMapGL.XYZLayer) => {
+    //   mapInstance().removeTileLayer(layer)
+    // }
+
+    // const createLayer = () => {
+    //   if (layer) {
+    //     removeTileLayer(layer)
+    //   }
+    //   const { getTile, ...retProps } = props
+    //   layer = new BMapGL.XYZLayer(retProps)
+    //   addTileLayer(layer)
+    // }
+
+    // props.visible && createLayer()
+
+    // watch(() => props.visible, n => layer && (n ? addTileLayer(layer) : removeTileLayer(layer)))
+    // watch(() => props.options, () => createLayer())
 
     onUnmounted(() => {
       if (layer) {

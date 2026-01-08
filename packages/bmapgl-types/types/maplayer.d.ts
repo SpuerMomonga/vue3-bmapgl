@@ -52,14 +52,14 @@ declare namespace BMapGL {
     maxZoom?: number
     extent?: [number, number, number, number]
     extentCRSIsWGS84?: boolean
-    boundary?: number[]
+    boundary?: string[]
     useThumbData?: boolean
     tms?: boolean
   }
 
   class XYZLayer extends TileLayer {
     constructor(opts?: XYZLayerOptions)
-    addBoundary(boundaries: number[]): void
+    addBoundary(boundaries: string[]): void
     clearBoundary(): void
     setZIndex(index: number): void
     setZIndexTop(): void

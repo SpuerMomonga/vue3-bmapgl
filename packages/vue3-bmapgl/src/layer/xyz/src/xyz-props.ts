@@ -1,20 +1,63 @@
 import type { PropType } from 'vue'
 import type { ExtractPublicPropTypes } from '../../../_utils'
 
-// type TemplateFn = (x: number, y: number, z: number) => number
-
-export interface XyzLayerOptions extends BMapGL.XYZLayerOptions {
-  getTile?: (info: any, cb: (image: string | HTMLImageElement | HTMLCanvasElement) => void) => void
-}
+type TemplateFn = (x: number, y: number, z: number) => number
+type BTemplateFn = (x: number, y: number, z: number) => string
+type GetTile = (info: any, cb: (image: string | HTMLImageElement | HTMLCanvasElement) => void) => void
 
 export const xyzLayerProps = {
   visible: {
     type: Boolean,
     default: true,
   },
-  options: {
-    type: Object as PropType<XyzLayerOptions>,
-    default: {},
+  getTile: {
+    type: Function as PropType<GetTile>,
+  },
+  useThumbData: {
+    type: Boolean,
+    default: false,
+  },
+  xTemplate: {
+    type: Function as PropType<TemplateFn>,
+  },
+  yTemplate: {
+    type: Function as PropType<TemplateFn>,
+  },
+  zTemplate: {
+    type: Function as PropType<TemplateFn>,
+  },
+  bTemplate: {
+    type: Function as PropType<BTemplateFn>,
+  },
+  minZoom: {
+    type: Number,
+    default: 3,
+  },
+  maxZoom: {
+    type: Number,
+    default: 23,
+  },
+  extent: {
+    type: Array as PropType<number[]>,
+  },
+  extentCRSIsWGS84: {
+    type: Boolean,
+    default: false,
+  },
+  boundary: {
+    type: Array as PropType<string[]>,
+  },
+  zIndex: {
+    type: Number,
+    default: 1,
+  },
+  zIndexTop: {
+    type: Boolean,
+    default: false,
+  },
+  tms: {
+    type: Boolean,
+    default: false,
   },
 } as const
 
