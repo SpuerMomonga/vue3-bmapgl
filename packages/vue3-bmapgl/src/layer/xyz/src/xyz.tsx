@@ -62,7 +62,9 @@ export default defineComponent({
 
             const handleError = () => callback && callback(null, key)
 
-            getTile(tileInfo, (img) => {
+            const box = (BMapGL as any).XYZProjection.getTileRangeExtent([tileInfo.zoom, tileInfo.col, tileInfo.row])
+
+            getTile({ x: tileInfo.col, y: tileInfo.row, z: tileInfo.zoom }, box, (img) => {
               if (typeof img === 'string' || img instanceof HTMLCanvasElement) {
                 const image = new Image()
                 image.crossOrigin = 'anonymous'

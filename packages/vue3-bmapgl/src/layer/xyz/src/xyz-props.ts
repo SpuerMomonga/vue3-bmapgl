@@ -1,9 +1,16 @@
 import type { PropType } from 'vue'
 import type { ExtractPublicPropTypes } from '../../../_utils'
 
+export interface Box {
+  minX: number
+  minY: number
+  maxX: number
+  maxY: number
+}
+
 type TemplateFn = (x: number, y: number, z: number) => number
 type BTemplateFn = (x: number, y: number, z: number) => string
-type GetTile = (info: any, cb: (image: string | HTMLImageElement | HTMLCanvasElement) => void) => void
+type GetTile = (info: any, box: Box, cb: (image: string | HTMLImageElement | HTMLCanvasElement) => void) => void
 
 export const xyzLayerProps = {
   visible: {

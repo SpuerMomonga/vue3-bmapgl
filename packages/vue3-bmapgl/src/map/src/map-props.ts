@@ -3,67 +3,44 @@ import type { ExtractPublicPropTypes } from '../../_utils'
 import type { onInitd } from './interface'
 
 export const mapProps = {
-  maxZoom: {
-    type: Number,
-    default: 21,
-  },
-  minZoom: {
-    type: Number,
-    default: 0,
-  },
-  heading: {
-    type: Number,
-    default: 0,
-  },
-  center: {
-    type: Object as PropType<BMapGL.Point | string | [number, number]>,
-    default: [116.403901, 39.915185],
-  },
-  zoom: {
-    type: Number,
-    default: 14,
-  },
+  maxZoom: Number,
+  minZoom: Number,
+  heading: Number,
+  center: Object as PropType<BMapGL.Point | string | [number, number]>,
+  zoom: Number,
   class: String,
   contentClass: String,
   enableScrollWheelZoom: {
     type: Boolean,
-    default: false,
+    default: undefined,
   },
   enableDragging: {
     type: Boolean,
-    default: true,
+    default: undefined,
   },
-  tilt: {
-    type: Number,
-    default: 0,
-  },
+  tilt: Number,
   enableTilt: {
     type: Boolean,
-    default: false,
+    default: undefined,
   },
-  mapType: {
-    type: String as PropType<BMapGL.MapTypeId>,
-    default: 'BMAP_NORMAL_MAP',
-  },
+  mapType: String as PropType<BMapGL.MapTypeId>,
   enableAutoResize: {
     type: Boolean,
-    default: true,
+    default: undefined,
   },
   enableTiltGestures: {
     type: Boolean,
-    default: false,
+    default: undefined,
   },
   enableRotate: {
     type: Boolean,
-    default: false,
+    default: undefined,
   },
   enableRotateGestures: {
     type: Boolean,
-    default: false,
+    default: undefined,
   },
-  displayOptions: {
-    type: Object as PropType<BMapGL.displayOptions>,
-  },
+  displayOptions: Object as PropType<BMapGL.displayOptions>,
   onInitd: Function as PropType<onInitd>,
 } as const
 
