@@ -3,6 +3,23 @@ declare namespace BMapGL {
    *
    */
   interface TileLayerOptions {
+    transform?: { source: string, target: string }
+    png8?: boolean
+    height?: number
+    retry?: boolean
+    retryTime?: number
+    dataType?: number
+    spanLevel?: number
+    tileTypeName?: string
+    cacheSize?: number
+    customLayer?: boolean
+    clipTile?: boolean
+    isTop?: boolean
+    opacity?: number
+    isLowText?: boolean
+    boundary?: boolean
+    showRegion?: string
+    useThumbData?: boolean
     /**
      * 是否使用了带有透明信息的PNG。由于IE6不支持PNG透明，因此需要特殊处理
      */
