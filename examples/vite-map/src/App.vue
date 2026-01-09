@@ -4,24 +4,27 @@ import { BConfigProvider, BMap, BTileLayer } from '@spuermomonga/vue3-bmapgl'
 
 const ak = import.meta.env.VITE_BMAP_AK
 
-const getTile: GetTilesUrlFn = (info, box, cb) => {
-  const canvas = document.createElement('canvas')
-  canvas.width = 256
-  canvas.height = 256
-  const ctx = canvas.getContext('2d')!
-  ctx.strokeStyle = 'red'
-  ctx.lineWidth = 2
-  ctx.strokeRect(0, 0, 256, 256)
-  // 设置文字样式
-  ctx.font = '24px Arial'
-  ctx.fillStyle = 'black'
-  ctx.textAlign = 'center'
-  ctx.textBaseline = 'middle'
-  // 画布显示瓦片编号
-  const centerX = canvas.width / 2 - 20 // 128
-  const centerY = canvas.height / 2 - 20 // 128
-  ctx.fillText(`${info.x},${info.y},${info.z}`, centerX, centerY)
-  cb(canvas.toDataURL())
+const getTile: GetTilesUrlFn = (info, cb) => {
+  const imgs = info.map((value) => {
+    const canvas = document.createElement('canvas')
+    canvas.width = 256
+    canvas.height = 256
+    const ctx = canvas.getContext('2d')!
+    ctx.strokeStyle = 'red'
+    ctx.lineWidth = 2
+    ctx.strokeRect(0, 0, 256, 256)
+    // 设置文字样式
+    ctx.font = '24px Arial'
+    ctx.fillStyle = 'black'
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
+    // 画布显示瓦片编号
+    const centerX = canvas.width / 2 - 20 // 128
+    const centerY = canvas.height / 2 - 20 // 128
+    ctx.fillText(`${value.tile.x},${value.tile.y},${value.tile.z}`, centerX, centerY)
+    return { img: canvas.toDataURL(), key: value.key }
+  })
+  cb(imgs)
 }
 
 const mapConfig = {

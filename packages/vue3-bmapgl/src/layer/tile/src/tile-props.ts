@@ -1,7 +1,25 @@
 import type { PropType } from 'vue'
 import type { ExtractPublicPropTypes } from '../../../_utils'
 
-export type GetTilesUrlFn = (tile: { x: number, y: number, z: number }, boundRange: any, cb: (image: string | HTMLImageElement | HTMLCanvasElement) => void) => void
+export interface Tile {
+  x: number
+  y: number
+  z: number
+}
+
+export interface TileImg {
+  key: string
+  img?: string | HTMLImageElement | HTMLCanvasElement
+}
+
+export interface Tiles {
+  key: string
+  tile: Tile
+  boundRange: any
+}
+
+export type GetTileUrlFn = (tile: Tile, boundRange: any, cb: (image?: string | HTMLImageElement | HTMLCanvasElement) => void) => void
+export type GetTilesUrlFn = (tiles: Tiles[], cb: (values: TileImg[]) => void) => void
 
 export const tileLayerProps = {
   visible: {
@@ -50,6 +68,7 @@ export const tileLayerProps = {
   zIndex: Number,
   zIndexTop: Boolean,
   tileUrlTemplate: String,
+  getTileUrl: Function as PropType<GetTileUrlFn>,
   getTilesUrl: Function as PropType<GetTilesUrlFn>,
 } as const
 
