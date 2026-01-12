@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import type { GetTilesUrlFn } from '@spuermomonga/vue3-bmapgl'
-import { BConfigProvider, BMap, BTileLayer } from '@spuermomonga/vue3-bmapgl'
+import { BConfigProvider, BCustomControl, BMap, BTileLayer } from '@spuermomonga/vue3-bmapgl'
 
 const ak = import.meta.env.VITE_BMAP_AK
 
 const getTile: GetTilesUrlFn = (info, cb) => {
+  console.log('------->')
   const imgs = info.map((value) => {
     const canvas = document.createElement('canvas')
     canvas.width = 256
@@ -38,6 +39,9 @@ const mapConfig = {
 <template>
   <BConfigProvider :ak="ak" :map-config="mapConfig">
     <BMap enable-scroll-wheel-zoom>
+      <BCustomControl>
+        文字
+      </BCustomControl>
       <BTileLayer :get-tiles-url="getTile" />
     </BMap>
   </BConfigProvider>
