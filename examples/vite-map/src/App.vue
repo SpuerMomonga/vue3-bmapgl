@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import type { GetTilesUrlFn } from '@spuermomonga/vue3-bmapgl'
-import { BConfigProvider, BCustomControl, BMap, BTileLayer } from '@spuermomonga/vue3-bmapgl'
+import { BConfigProvider, BCustomControl, BInfoWindow, BMap, BTileLayer } from '@spuermomonga/vue3-bmapgl'
 
 const ak = import.meta.env.VITE_BMAP_AK
 
 const getTile: GetTilesUrlFn = (info, cb) => {
-  console.log('------->')
   const imgs = info.map((value) => {
     const canvas = document.createElement('canvas')
     canvas.width = 256
@@ -42,6 +41,9 @@ const mapConfig = {
       <BCustomControl>
         文字
       </BCustomControl>
+      <BInfoWindow :position="[106.71, 26.60]" :show="true" :width="500" :height="250">
+        <div>文字</div>
+      </BInfoWindow>
       <BTileLayer :get-tiles-url="getTile" />
     </BMap>
   </BConfigProvider>
