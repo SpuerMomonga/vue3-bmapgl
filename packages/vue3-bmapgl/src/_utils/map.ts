@@ -78,3 +78,23 @@ export function listToMapPoints(points?: BMapGL.Point[] | number[][] | string[])
 
   return points as BMapGL.Point[]
 }
+
+export function setupMapEvents(map: any, props: Record<string, any>) {
+  const cleanup = Object.keys(props)
+    .filter(key => key.startsWith('on') && typeof props[key] === 'function')
+    .map((propName) => {
+      const eventName = propName.slice(2).toLowerCase()
+      const handler = props[propName]
+
+      const wrapper = (e: any) => {
+        e.preventDefault?.() || e.domEvent?.preventDefault?.()
+        e.stopPropagation?.() || e.domEvent?.stopPropagation?.()
+        handler(e)
+      }
+
+      map.addEventListener(eventName, wrapper)
+      return () => map.removeEventListener(eventName, wrapper)
+    })
+
+  return () => cleanup.forEach(fn => fn())
+}

@@ -1,5 +1,5 @@
 import type { PropType } from 'vue'
-import type { ExtractPublicPropTypes } from '../../_utils'
+import type { AnyFunction, ExtractPublicPropTypes } from '../../_utils'
 import type { onInitd } from './interface'
 
 export const mapProps = {
@@ -42,6 +42,9 @@ export const mapProps = {
   },
   displayOptions: Object as PropType<BMapGL.displayOptions>,
   onInitd: Function as PropType<onInitd>,
+  onClick: Function as PropType<AnyFunction>,
+  onDblclick: Function as PropType<AnyFunction>,
+  onMousemove: Function as PropType<AnyFunction>,
 } as const
 
 export type MapProps = ExtractPublicPropTypes<typeof mapProps>

@@ -121,7 +121,7 @@ export default defineComponent({
 
     return () => (
       <div style="display: none">
-        <div ref={infoWindowContentRef} v-bind={attrs}>{slots.default?.()}</div>
+        <div ref={infoWindowContentRef} {...attrs}>{slots.default?.()}</div>
       </div>
     )
   },

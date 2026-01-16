@@ -1,4 +1,4 @@
-type AnyFunction = (...args: any[]) => any
+export type AnyFunction = (...args: any[]) => any
 
 function call(funcs: MaybeArray<() => void>): void
 function call<A1>(funcs: MaybeArray<(a1: A1) => void>, a1: A1): void

@@ -33,11 +33,15 @@ const mapConfig = {
   },
   center: [106.71, 26.60],
 }
+
+function onClick(e) {
+  console.log(e)
+}
 </script>
 
 <template>
   <BConfigProvider :ak="ak" :map-config="mapConfig">
-    <BMap enable-scroll-wheel-zoom>
+    <BMap enable-scroll-wheel-zoom @click="onClick">
       <BCustomControl>
         文字
       </BCustomControl>

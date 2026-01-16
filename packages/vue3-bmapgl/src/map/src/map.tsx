@@ -1,7 +1,7 @@
 import type { SlotsType, VNode } from 'vue'
 import { defineComponent, nextTick, onMounted, onUnmounted, provide, ref, watch, watchEffect } from 'vue'
 import { useConfig } from '../../_mixins'
-import { resolveWrappedSlot } from '../../_utils'
+import { resolveWrappedSlot, setupMapEvents } from '../../_utils'
 import { mapInjectionKey } from './constants'
 import { mapProps } from './map-props'
 import styles from './style/map.module.css'
@@ -21,6 +21,7 @@ export default defineComponent({
 
     const contentRef = ref<HTMLDivElement | null>()
     let map: BMapGL.Map | null = null
+    let cleanup: () => void
     const initd = ref(false)
 
     provide(mapInjectionKey, { mapInstance: () => map! })
@@ -95,6 +96,7 @@ export default defineComponent({
       initMapOptions()
       startWatchProps()
       onInitd?.({ map: map! })
+      cleanup = setupMapEvents(map, props)
       initd.value = true
     }
 
@@ -109,6 +111,7 @@ export default defineComponent({
     onUnmounted(() => {
       if (map) {
         try {
+          cleanup?.()
           map?.destroy()
         } catch (error: any) {
           console.error(`[Vue3 BMapGL]: ${error.message}`)

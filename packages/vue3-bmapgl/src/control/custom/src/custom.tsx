@@ -38,7 +38,7 @@ export default defineComponent({
 
     return () => (
       <div style="display: none">
-        <div ref={controlContentRef} v-bind={attrs}>{slots.default?.()}</div>
+        <div ref={controlContentRef} {...attrs}>{slots.default?.()}</div>
       </div>
     )
   },
