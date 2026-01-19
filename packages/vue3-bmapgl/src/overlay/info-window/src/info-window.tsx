@@ -17,28 +17,12 @@ export default defineComponent({
       set: value => props['onUpdate:show']?.(value),
     })
 
-    const openInfoWindow = () => {
-      const { position } = props
-      if (!position || !infoWindow)
-        return
-      const point = Array.isArray(position) ? new BMapGL.Point(position[0], position[1]) : position
-      ;(mapInstance() as any).openInfoWindow(infoWindow, point)
-      visible.value = true
-    }
-
-    const closeInfoWindow = () => {
-      if (!infoWindow)
-        return
-      infoWindow?.hide?.()
-      visible.value = false
-    }
-
-    const setPosition = (position?: BMapGL.Point | [number, number]) => {
-      openInfoWindow()
-      const point = Array.isArray(position) ? new BMapGL.Point(position[0], position[1]) : position
-      ;(infoWindow as any)?.setPosition(point)
-      if (!visible.value)
-        closeInfoWindow()
+    const removeInfoWindow = () => {
+      if (infoWindow) {
+        infoWindow.hide?.()
+        mapInstance().removeOverlay(infoWindow)
+        infoWindow = null
+      }
     }
 
     const redraw = () => {
@@ -50,30 +34,12 @@ export default defineComponent({
       })
     }
 
-    const setContent = (content: string | HTMLElement) => {
-      infoWindow?.setContent(content)
-    }
-
-    const setWidth = (width: number) => {
-      infoWindow?.setWidth(width)
-    }
-
-    const setHeight = (height: number) => {
-      infoWindow?.setHeight(height)
-    }
-
-    const startWatchProps = () => {
-      watch(() => props.position, setPosition, { deep: true })
-      watch(() => props.width, setWidth)
-      watch(() => props.height, setHeight)
-      watch(() => props.show, () => props.show ? openInfoWindow() : closeInfoWindow())
-    }
-
-    onMounted(() => {
-      const { width, height, maxWidth, offset, enableAutoPan, enableCloseOnClick } = props
+    const createInfoWindow = () => {
+      const { width, height, title, maxWidth, offset, enableAutoPan, position, enableCloseOnClick } = props
       infoWindow = new BMapGL.InfoWindow(infoWindowContentRef.value!, {
         width,
         height,
+        title,
         maxWidth,
         offset: new BMapGL.Size(offset.x, offset.y),
         enableAutoPan,
@@ -88,34 +54,80 @@ export default defineComponent({
           visible.value = true
       })
       mapInstance().addOverlay(infoWindow)
+      const point = Array.isArray(position) ? new BMapGL.Point(position[0], position[1]) : position
+      ;(mapInstance() as any)?.openInfoWindow(infoWindow, point)
       redraw()
+    }
 
+    const setPosition = (position: any) => {
+      const point = Array.isArray(position)
+        ? new BMapGL.Point(position[0], position[1])
+        : position
+      ;(infoWindow as any)?.setPosition(point)
+    }
+
+    const setContent = (content: string | HTMLElement) => {
+      infoWindow?.setContent(content)
+    }
+
+    const setWidth = (width: number) => {
+      infoWindow?.setWidth(width)
+    }
+
+    const setHeight = (height: number) => {
+      infoWindow?.setHeight(height)
+    }
+
+    const setTitle = (title?: string) => {
+      infoWindow?.setTitle(title!)
+    }
+
+    const bindObserver = () => {
+      const MutationObserver = window.MutationObserver
+      if (!MutationObserver) {
+        return
+      }
+      new MutationObserver(() => {
+        infoWindow?.redraw()
+      }).observe(infoWindowContentRef.value!, { attributes: true, childList: true, characterData: true, subtree: true })
+    }
+
+    const startWatchProps = () => {
+      watch(() => props.position, setPosition, { deep: true })
+      watch(() => props.width, setWidth)
+      watch(() => props.height, setHeight)
+      watch(() => props.title, setTitle)
+      watch(() => props.show, () => props.show ? createInfoWindow() : removeInfoWindow())
+    }
+
+    const init = () => {
       if (props.show) {
-        nextTick(() => {
-          openInfoWindow()
-          nextTick(() => {
-            if (infoWindow && '_visible' in infoWindow) {
-              !infoWindow._visible && (visible.value = false)
-            } else {
-              !infoWindow?.isOpen() && (visible.value = false)
-            }
-          })
-        })
+        createInfoWindow()
       }
 
+      bindObserver()
+
       startWatchProps()
+    }
+
+    onMounted(() => {
+      if (!infoWindowContentRef.value) {
+        nextTick(() => init())
+      } else {
+        init()
+      }
     })
 
     onUpdated(() => {
       if (infoWindow && infoWindow.isOpen()) {
         setContent(infoWindowContentRef.value ?? '')
+        redraw()
       }
     })
 
     onUnmounted(() => {
       if (infoWindow) {
-        mapInstance().removeOverlay(infoWindow)
-        redraw()
+        removeInfoWindow()
       }
     })
 

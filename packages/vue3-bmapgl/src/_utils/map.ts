@@ -81,9 +81,9 @@ export function listToMapPoints(points?: BMapGL.Point[] | number[][] | string[])
 
 export function setupMapEvents(map: any, props: Record<string, any>) {
   const cleanup = Object.keys(props)
-    .filter(key => key.startsWith('on') && typeof props[key] === 'function')
+    .filter(key => key.startsWith('on') && !key.startsWith('onUpdate') && typeof props[key] === 'function')
     .map((propName) => {
-      const eventName = propName.slice(2).toLowerCase()
+      const eventName = propName.slice(2).toLocaleLowerCase()
       const handler = props[propName]
 
       const wrapper = (e: any) => {

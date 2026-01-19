@@ -26,6 +26,7 @@ export const infoWindowProps = {
     default: true,
   },
   'onUpdate:show': Function,
+  'title': String,
 } as const
 
 export type InfoWindowProps = ExtractPublicPropTypes<typeof infoWindowProps>

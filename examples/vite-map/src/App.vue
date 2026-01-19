@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { GetTilesUrlFn } from '@spuermomonga/vue3-bmapgl'
 import { BConfigProvider, BCustomControl, BInfoWindow, BMap, BTileLayer } from '@spuermomonga/vue3-bmapgl'
+import { ref } from 'vue'
 
 const ak = import.meta.env.VITE_BMAP_AK
 
@@ -34,8 +35,17 @@ const mapConfig = {
   center: [106.71, 26.60],
 }
 
-function onClick(e) {
-  console.log(e)
+const infoWindowShow = ref(false)
+const position = ref<any>(undefined)
+
+function onClick(e: any) {
+  // console.log('click', e)
+  if (infoWindowShow.value) {
+    position.value = [e.latlng.lng, e.latlng.lat]
+    return
+  }
+  position.value = [e.latlng.lng, e.latlng.lat]
+  infoWindowShow.value = true
 }
 </script>
 
@@ -45,7 +55,7 @@ function onClick(e) {
       <BCustomControl>
         文字
       </BCustomControl>
-      <BInfoWindow :position="[106.71, 26.60]" :show="true" :width="500" :height="250">
+      <BInfoWindow v-model:show="infoWindowShow" :position="position" :width="500" :height="250">
         <div>文字</div>
       </BInfoWindow>
       <BTileLayer :get-tiles-url="getTile" />
